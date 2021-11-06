@@ -1,5 +1,11 @@
-const fs= require('fs')
+/* const add = require('./utils')
+const sum=add(5,6)
+console.log(sum) */
 
-//fs.writeFileSync('note.txt','My Name is Imran  and here i am going to learn node....')
+const validator=require('validator')
+//import validator from 'validator'
 
-fs.appendFileSync('./note.txt','\n hey i am raze bro ')
+const getNotes = require('./node')
+
+console.log(validator.isEmail('raze.dsf@gamil.com'))
+console.log(validator.isURL('https://raze.com'))
