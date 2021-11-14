@@ -2,10 +2,12 @@
 const sum=add(5,6)
 console.log(sum) */
 
-const validator=require('validator')
-const yargs= require('yargs')
+const validator = require('validator')
+const yargs = require('yargs')
+const notes = require('./note.js')
 
 const chalk = require('chalk');
+//const { string } = require('yargs');
 
 
 //console.log(validator.isEmail('raze.dsf@gamil.com'))
@@ -13,23 +15,43 @@ const chalk = require('chalk');
 
 yargs.version('1.1.0')
 
-// add command 
+// Create add command
 yargs.command({
-
-    command : 'add',
+    command: 'add',
     describe: 'Add a new note',
-    handler: function(){
-        console.log('Adding a new note') 
+    builder: {
+        title: {
+            describe: 'Note title',
+            demandOption: true,
+            type: 'string'
+        },
+        body: {
+            describe: 'Note body',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: function (argv) {
+        notes.addNote(argv.title, argv.body)   
     }
-
 })
 // remove command
 yargs.command({
 
-    command : 'remove',
+
+    command: 'remove',
     describe: 'remove a new note',
-    handler: function(){
-        console.log('Remove a new note') 
+
+    builder:{
+        title :{
+            describe: 'Note title',
+            demandOption: true,
+            type: 'string'  
+        }
+    },
+    handler: function (argv) {
+        notes.removeNote (argv.title)
+       
     }
 
 })
@@ -37,10 +59,10 @@ yargs.command({
 
 yargs.command({
 
-    command : 'list',
+    command: 'list',
     describe: 'list command',
-    handler: function(){
-        console.log('Show the list') 
+    handler () {
+        notes.listNotes()
     }
 
 })
@@ -48,15 +70,16 @@ yargs.command({
 
 yargs.command({
 
-    command : 'read',
-    describe: 'read a value',
-    handler: function(){
-        console.log('Read the  value from server') 
+    command: 'read',
+    describe: 'read a note',
+    handler(argv) {
+        notes.readNotes(argv.title)    
     }
 
 })
 
-console.log(yargs.argv)
+yargs.parse()
+//console.log(yargs.argv)
 /* if(command==='add')
 console.log('Adding note!')
 else if (command== 'remove')
